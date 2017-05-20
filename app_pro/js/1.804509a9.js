@@ -1,0 +1,2 @@
+webpackJsonp([1],{95:function(o,n,e){"use strict";function t(o,n){if(!(o instanceof n))throw new TypeError("Cannot call a class as a function")}var a=function o(){t(this,o),console.log("Module Constructor Loaded"),this.name="[Module A Loaded]"};a.$inject=[];var r=angular.module("ngApp");r.controller("ModuleAController",a),o.exports=r}});
+//# sourceMappingURL=1.804509a9.js.map
