@@ -36,7 +36,7 @@ module.exports = function makeWebpackConfig() {
     };
 
     //Type of sourcemap to use per build type
-    config.devtool = isProd ? 'source-map' : 'source-map';
+    config.devtool = 'source-map';
 
     //Loaders - This handles most of the magic responsible for converting modules
     config.module = {
@@ -109,9 +109,9 @@ module.exports = function makeWebpackConfig() {
 
     config.devServer = {
         contentBase: './app/',
-        stats: 'minimal',
+        stats: 'minimal' ,
         open: true
     };
 
     return config;
-}();
+} ();
