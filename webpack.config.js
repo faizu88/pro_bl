@@ -6,6 +6,7 @@ var autoprefixer = require('autoprefixer');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var CommonsChunkPlugin = require("./node_modules/webpack/lib/optimize/CommonsChunkPlugin");
 
 /**
  * Env
@@ -18,6 +19,8 @@ module.exports = function makeWebpackConfig() {
     var config = {};
     //Should be an empty object if it's generating a test build     
     config.entry = {
+        // vendor: ["oclazyload","angular-ui-router","angular"],
+        vendor: ["angular", "angular-ui-router", "oclazyload"],
         app: './app/modules/app.init.js'
     };
 
@@ -36,7 +39,7 @@ module.exports = function makeWebpackConfig() {
     };
 
     //Type of sourcemap to use per build type
-    config.devtool = 'source-map';
+    //config.devtool = 'source-map';
 
     //Loaders - This handles most of the magic responsible for converting modules
     config.module = {
@@ -52,8 +55,6 @@ module.exports = function makeWebpackConfig() {
             // Allow loading css through js               
             // Postprocess your css with PostCSS plugins
             test: /\.css$/,
-            // Extract css files in production builds
-            // Use style-loader in development.
             loader: ExtractTextPlugin.extract({
                 fallbackLoader: 'style-loader',
                 loader: [
@@ -61,18 +62,21 @@ module.exports = function makeWebpackConfig() {
                     { loader: 'postcss-loader' }
                 ],
             })
-        }, {
+        },
+        {
             // ASSET LOADER
             // Copy png, jpg, jpeg, gif, svg, woff, woff2, ttf, eot files to output
             // You can add here any file extension you want to get copied to your output
             test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
-            loader: 'file-loader'
-        }, {
+            loader: 'file-loader?name=images/[name].[ext]'
+        },
+        {
             // HTML LOADER
             // Allow loading html through js
             test: /\.html$/,
             loader: 'raw-loader'
-        }]
+        }
+        ]
     };
 
 
@@ -86,7 +90,7 @@ module.exports = function makeWebpackConfig() {
             options: { postcss: { plugins: [autoprefixer] } }
         }),
         // Render index.html
-        new HtmlWebpackPlugin({ template: './app/modules/index.html', inject: 'body' }),
+        new HtmlWebpackPlugin({ template: './app/index.html', inject: 'body' }),
         // Extract css files     
         new ExtractTextPlugin({ filename: 'css/[name].css', disable: !isProd, allChunks: true }),
         // Only emit files when there are no errors
@@ -98,18 +102,24 @@ module.exports = function makeWebpackConfig() {
             mangle: {
                 except: ['$q', '$ocLazyLoad']
             },
-            sourceMap: true
+            //sourceMap: true
         }),
         // Copy assets from the public folder
         new CopyWebpackPlugin([{
             from: __dirname + '/app/public'
         }]),
+
+        new webpack.optimize.CommonsChunkPlugin({
+            // The order of this array matters
+            names: ["vendor"],
+            minChunks: 2
+        })
     ];
 
 
     config.devServer = {
         contentBase: './app/',
-        stats: 'minimal' ,
+        stats: 'minimal',
         open: true
     };
 
