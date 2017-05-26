@@ -18,8 +18,7 @@ var isProd = ENV === 'build';
 module.exports = function makeWebpackConfig() {
     var config = {};
     //Should be an empty object if it's generating a test build     
-    config.entry = {
-        // vendor: ["oclazyload","angular-ui-router","angular"],
+    config.entry = {     
         vendor: ["angular", "angular-ui-router", "oclazyload"],
         app: './app/modules/app.init.js'
     };

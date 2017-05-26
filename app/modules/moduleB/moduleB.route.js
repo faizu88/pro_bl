@@ -9,12 +9,12 @@ export default function routes($stateProvider) {
             resolve: {
                 shims: ["$q", "$ocLazyLoad", function($q, $ocLazyLoad) {
                     return $q((resolve) => {
-                        require.ensure([], () => {
+                        require.ensure([], (require) => {
                             // load whole module
                             let module = require('./moduleB.controller');
                             $ocLazyLoad.load({ name: module.name });
                             resolve(module.controller);
-                        });
+                        },"moduleB");
                     });
                 }]
             }

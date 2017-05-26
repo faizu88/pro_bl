@@ -1,10 +1,10 @@
 import angular from "angular";
 import uirouter from "angular-ui-router";
 import ocLazyLoad from "oclazyload";
-import moduleARoute from "./moduleA/moduleA.route";
+import moduleARoute from "./user-access/user-access.route";
 import moduleBRoute from "./moduleB/moduleB.route";
 import "../styles/app.css";
-import "../styles/login.css";
+
 
 
 /*
@@ -30,7 +30,7 @@ angular.module("ngApp", [uirouter, ocLazyLoad])
         function($stateProvider, $locationProvider, $urlRouterProvider) {
             // Removing '!' from the URL
             $locationProvider.hashPrefix('');
-            $urlRouterProvider.otherwise('/moduleA');
+            $urlRouterProvider.otherwise('/');
         }
     ])
     .config(moduleARoute)
