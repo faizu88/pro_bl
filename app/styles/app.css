@@ -1,7 +1,6 @@
 /* styles in src/style directory are applied to the whole page */
 body {
   background: #f1f1f1;
-  background: url('../public/images/cssImg.png') right no-repeat;
   color: #fff;
 }
 

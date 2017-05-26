@@ -4,6 +4,7 @@ import ocLazyLoad from "oclazyload";
 import moduleARoute from "./moduleA/moduleA.route";
 import moduleBRoute from "./moduleB/moduleB.route";
 import "../styles/app.css";
+import "../styles/login.css";
 
 
 /*
